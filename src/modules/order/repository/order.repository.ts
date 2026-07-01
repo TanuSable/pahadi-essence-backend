@@ -122,4 +122,40 @@ export const orderRepository = {
   },
 
   buildPaginationMeta,
+
+  async getAnalytics(): Promise<{
+    totalOrders: number;
+    totalRevenue: number;
+    statusDistribution: Record<string, number>;
+  }> {
+    const [totals, statusBreakdown] = await Promise.all([
+      Order.aggregate<{ totalOrders: number; totalRevenue: number }>([
+        {
+          $group: {
+            _id: null,
+            totalOrders: { $sum: 1 },
+            totalRevenue: { $sum: '$totalPrice' },
+          },
+        },
+      ]),
+      Order.aggregate<{ _id: string; count: number }>([
+        { $group: { _id: '$status', count: { $sum: 1 } } },
+      ]),
+    ]);
+
+    const statusDistribution: Record<string, number> = {};
+    statusBreakdown.forEach((item) => {
+      statusDistribution[item._id] = item.count;
+    });
+
+    return {
+      totalOrders: totals[0]?.totalOrders ?? 0,
+      totalRevenue: totals[0]?.totalRevenue ?? 0,
+      statusDistribution,
+    };
+  },
+
+  async findRecentOrders(limit: number): Promise<IOrderDocument[]> {
+    return Order.find().sort({ createdAt: -1 }).limit(limit).lean<IOrderDocument[]>();
+  },
 };

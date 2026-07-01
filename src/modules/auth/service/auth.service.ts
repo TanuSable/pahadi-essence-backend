@@ -53,6 +53,10 @@ export const authService = {
       throw new AppError('Invalid credentials', HTTP_STATUS.UNAUTHORIZED);
     }
 
+    if (!user.isActive) {
+      throw new AppError('Account is blocked. Please contact support.', HTTP_STATUS.FORBIDDEN);
+    }
+
     const isPasswordValid = await user.comparePassword(data.password);
     if (!isPasswordValid) {
       throw new AppError('Invalid credentials', HTTP_STATUS.UNAUTHORIZED);

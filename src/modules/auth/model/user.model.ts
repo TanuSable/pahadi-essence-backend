@@ -9,6 +9,7 @@ export interface IUser {
   password: string;
   role: UserRole;
   isVerified: boolean;
+  isActive: boolean;
   refreshToken?: string;
 }
 
@@ -56,6 +57,10 @@ const userSchema = new Schema<IUserDocument>(
     isVerified: {
       type: Boolean,
       default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
     refreshToken: {
       type: String,

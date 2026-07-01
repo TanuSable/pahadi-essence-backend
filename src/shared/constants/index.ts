@@ -18,3 +18,21 @@ export const DATABASE_RETRY = {
   MAX_ATTEMPTS: 5,
   DELAY_MS: 5_000,
 } as const;
+
+export const USER_ROLES = {
+  CUSTOMER: 'CUSTOMER',
+  STAFF: 'STAFF',
+  SUPER_ADMIN: 'SUPER_ADMIN',
+} as const;
+
+export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
+
+export const COOKIE_NAMES = {
+  ACCESS_TOKEN: 'access_token',
+  REFRESH_TOKEN: 'refresh_token',
+} as const;
+
+export const AUTH_RATE_LIMIT = {
+  WINDOW_MS: 15 * 60 * 1000,
+  MAX: 20,
+} as const;

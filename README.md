@@ -49,6 +49,11 @@ All endpoints are versioned under `/api/v1`:
 | Method | Path              | Description   |
 |--------|-------------------|---------------|
 | GET    | `/api/v1/health`  | Health check  |
+| POST   | `/api/v1/auth/register` | Register customer |
+| POST   | `/api/v1/auth/login`    | Login (email or phone) |
+| POST   | `/api/v1/auth/logout`   | Logout (protected) |
+| POST   | `/api/v1/auth/refresh`  | Refresh tokens |
+| GET    | `/api/v1/auth/me`       | Current user (protected) |
 
 ## Response Format
 

@@ -68,6 +68,13 @@ All endpoints are versioned under `/api/v1`:
 | GET    | `/api/v1/orders`            | List orders (USER / all for STAFF) |
 | GET    | `/api/v1/orders/:id`        | Get order by ID (AUTH) |
 | PATCH  | `/api/v1/orders/:id/status` | Update order status (STAFF/SUPER_ADMIN) |
+| GET    | `/api/v1/admin/dashboard`   | Dashboard analytics (STAFF/SUPER_ADMIN) |
+| GET    | `/api/v1/admin/users`       | List users (STAFF/SUPER_ADMIN) |
+| PATCH  | `/api/v1/admin/users/:id/role` | Update user role (SUPER_ADMIN only) |
+| PATCH  | `/api/v1/admin/users/:id/status` | Block/unblock user (STAFF/SUPER_ADMIN) |
+| GET    | `/api/v1/admin/products`    | Admin product list (STAFF/SUPER_ADMIN) |
+| PATCH  | `/api/v1/admin/products/:id/stock` | Update stock (STAFF/SUPER_ADMIN) |
+| GET    | `/api/v1/admin/orders`        | Admin orders + analytics (STAFF/SUPER_ADMIN) |
 
 ## Response Format
 

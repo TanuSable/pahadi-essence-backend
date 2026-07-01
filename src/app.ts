@@ -17,6 +17,7 @@ import { authModule } from '@modules/auth/auth.module';
 import { productModule } from '@modules/product/product.module';
 import { cartModule } from '@modules/cart/cart.module';
 import { orderModule } from '@modules/order/order.module';
+import { adminModule } from '@modules/admin/admin.module';
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(`/api/${API_VERSION}`, authModule());
 app.use(`/api/${API_VERSION}`, productModule());
 app.use(`/api/${API_VERSION}`, cartModule());
 app.use(`/api/${API_VERSION}`, orderModule());
+app.use(`/api/${API_VERSION}`, adminModule());
 
 app.use(notFoundHandler);
 app.use(errorHandler);

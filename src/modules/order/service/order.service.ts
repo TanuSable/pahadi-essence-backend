@@ -232,4 +232,43 @@ export const orderService = {
       session.endSession();
     }
   },
+
+  async getAdminOrders(query: OrderListQueryDto): Promise<
+    PaginatedOrdersDto & {
+      analytics: {
+        totalOrders: number;
+        totalRevenue: number;
+        statusDistribution: Record<string, number>;
+      };
+    }
+  > {
+    const filter: Record<string, unknown> = {};
+
+    if (query.status) {
+      filter.status = query.status;
+    }
+
+    const [{ orders, total }, analytics] = await Promise.all([
+      orderRepository.findOrders(filter, query),
+      orderRepository.getAnalytics(),
+    ]);
+
+    return {
+      items: orders.map(toOrderResponse),
+      meta: orderRepository.buildPaginationMeta(query.page, query.limit, total),
+      analytics,
+    };
+  },
+
+  async getAdminOrderById(orderId: string): Promise<OrderResponseDto> {
+    const order = await orderRepository.findById(orderId);
+
+    if (!order) {
+      throw new AppError('Order not found', HTTP_STATUS.NOT_FOUND);
+    }
+
+    return toOrderResponse(order);
+  },
+
+  toOrderResponse,
 };

@@ -155,4 +155,38 @@ export const productService = {
     await uploadService.deleteMedia([...product.images, ...product.videos]);
     await productRepository.deleteById(id);
   },
+
+  async getAdminProducts(query: ProductQueryDto): Promise<PaginatedProductsDto> {
+    validatePriceRange(query.minPrice, query.maxPrice);
+
+    const adminQuery: ProductQueryDto = { ...query, includeInactive: true };
+    const { items, total } = await productRepository.findAll(adminQuery, true);
+
+    return {
+      items,
+      meta: productRepository.buildPaginationMeta(query.page, query.limit, total),
+    };
+  },
+
+  async setProductActive(id: string, isActive: boolean): Promise<ProductResponseDto> {
+    const updated = await productRepository.updateById(id, { isActive });
+
+    if (!updated) {
+      throw new AppError('Product not found', HTTP_STATUS.NOT_FOUND);
+    }
+
+    return productRepository.toProductResponse(updated);
+  },
+
+  async updateProductStock(id: string, stockQuantity: number): Promise<ProductResponseDto> {
+    validateStockQuantity(stockQuantity);
+
+    const updated = await productRepository.updateById(id, { stockQuantity });
+
+    if (!updated) {
+      throw new AppError('Product not found', HTTP_STATUS.NOT_FOUND);
+    }
+
+    return productRepository.toProductResponse(updated);
+  },
 };

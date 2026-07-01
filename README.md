@@ -64,6 +64,10 @@ All endpoints are versioned under `/api/v1`:
 | PUT    | `/api/v1/cart/update`       | Update item quantity (AUTH) |
 | DELETE | `/api/v1/cart/remove/:id`   | Remove item from cart (AUTH) |
 | DELETE | `/api/v1/cart/clear`        | Clear cart (AUTH) |
+| POST   | `/api/v1/orders/checkout`   | Place order from cart (AUTH) |
+| GET    | `/api/v1/orders`            | List orders (USER / all for STAFF) |
+| GET    | `/api/v1/orders/:id`        | Get order by ID (AUTH) |
+| PATCH  | `/api/v1/orders/:id/status` | Update order status (STAFF/SUPER_ADMIN) |
 
 ## Response Format
 

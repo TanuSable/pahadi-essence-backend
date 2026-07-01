@@ -36,3 +36,21 @@ export const AUTH_RATE_LIMIT = {
   WINDOW_MS: 15 * 60 * 1000,
   MAX: 20,
 } as const;
+
+export const PAGINATION = {
+  DEFAULT_PAGE: 1,
+  DEFAULT_LIMIT: 12,
+  MAX_LIMIT: 100,
+} as const;
+
+export const CLOUDINARY_FOLDERS = {
+  PRODUCT_IMAGES: 'pahadi-essence/products/images',
+  PRODUCT_VIDEOS: 'pahadi-essence/products/videos',
+} as const;
+
+export const UPLOAD_LIMITS = {
+  MAX_IMAGES: 10,
+  MAX_VIDEOS: 5,
+  IMAGE_MAX_SIZE_BYTES: 5 * 1024 * 1024,
+  VIDEO_MAX_SIZE_BYTES: 50 * 1024 * 1024,
+} as const;

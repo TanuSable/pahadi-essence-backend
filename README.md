@@ -54,6 +54,16 @@ All endpoints are versioned under `/api/v1`:
 | POST   | `/api/v1/auth/logout`   | Logout (protected) |
 | POST   | `/api/v1/auth/refresh`  | Refresh tokens |
 | GET    | `/api/v1/auth/me`       | Current user (protected) |
+| POST   | `/api/v1/products`      | Create product (STAFF/SUPER_ADMIN) |
+| GET    | `/api/v1/products`      | List products (public) |
+| GET    | `/api/v1/products/:id`  | Get product by ID (public) |
+| PUT    | `/api/v1/products/:id`  | Update product (STAFF/SUPER_ADMIN) |
+| DELETE | `/api/v1/products/:id`  | Delete product (STAFF/SUPER_ADMIN) |
+| POST   | `/api/v1/cart/add`          | Add product to cart (AUTH) |
+| GET    | `/api/v1/cart`              | Get cart (AUTH) |
+| PUT    | `/api/v1/cart/update`       | Update item quantity (AUTH) |
+| DELETE | `/api/v1/cart/remove/:id`   | Remove item from cart (AUTH) |
+| DELETE | `/api/v1/cart/clear`        | Clear cart (AUTH) |
 
 ## Response Format
 

@@ -3,16 +3,17 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
-import mongoSanitize from 'express-mongo-sanitize';
 import hpp from 'hpp';
 import { corsOptions } from '@shared/config/cors';
 import { API_VERSION } from '@shared/constants';
 import { requestIdMiddleware } from '@shared/middleware/request-id.middleware';
 import { loggerMiddleware } from '@shared/middleware/logger.middleware';
+import { mongoSanitizeMiddleware } from '@shared/middleware/mongo-sanitize.middleware';
 import { apiRateLimiter } from '@shared/middleware/rate-limit.middleware';
 import { errorHandler } from '@shared/middleware/error.middleware';
 import { notFoundHandler } from '@shared/middleware/not-found.middleware';
 import { healthModule } from '@modules/health/health.module';
+import { authModule } from '@modules/auth/auth.module';
 
 const app = express();
 
@@ -26,11 +27,12 @@ app.use(loggerMiddleware);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
-app.use(mongoSanitize());
+app.use(mongoSanitizeMiddleware);
 app.use(hpp());
 app.use(apiRateLimiter);
 
 app.use(`/api/${API_VERSION}`, healthModule());
+app.use(`/api/${API_VERSION}`, authModule());
 
 app.use(notFoundHandler);
 app.use(errorHandler);

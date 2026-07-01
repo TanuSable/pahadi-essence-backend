@@ -25,6 +25,16 @@ export const validate =
       return;
     }
 
-    req[part] = result.data;
+    if (part === 'query' || part === 'params') {
+      Object.defineProperty(req, part, {
+        value: result.data,
+        writable: true,
+        configurable: true,
+        enumerable: true,
+      });
+    } else {
+      req[part] = result.data;
+    }
+
     next();
   };

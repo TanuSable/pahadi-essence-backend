@@ -14,6 +14,8 @@ import { errorHandler } from '@shared/middleware/error.middleware';
 import { notFoundHandler } from '@shared/middleware/not-found.middleware';
 import { healthModule } from '@modules/health/health.module';
 import { authModule } from '@modules/auth/auth.module';
+import { productModule } from '@modules/product/product.module';
+import { cartModule } from '@modules/cart/cart.module';
 
 const app = express();
 
@@ -33,6 +35,8 @@ app.use(apiRateLimiter);
 
 app.use(`/api/${API_VERSION}`, healthModule());
 app.use(`/api/${API_VERSION}`, authModule());
+app.use(`/api/${API_VERSION}`, productModule());
+app.use(`/api/${API_VERSION}`, cartModule());
 
 app.use(notFoundHandler);
 app.use(errorHandler);
